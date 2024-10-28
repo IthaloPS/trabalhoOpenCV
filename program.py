@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import time
 from sklearn.neighbors import KDTree
+import kociemba
 
 # Dicionário de cores do cubo mágico em RGB
 color_dict = {
@@ -9,7 +10,7 @@ color_dict = {
     "Verde": (0, 255, 0),
     "Azul": (0, 0, 255),
     "Amarelo": (255, 255, 0),
-    "Laranja": (255, 140, 0),
+    "Laranja": (255, 130, 0),
     "Branco": (255, 255, 255)
 }
 
@@ -22,6 +23,41 @@ matriz_centro = {
     "Laranja": [],
     "Branco": []
 }
+
+matriz_to_kociemba = {
+    "F":[],
+    "R":[],
+    "L":[],
+    "U":[],
+    "B":[],
+    "D":[]
+}
+
+cor_to_lado = {
+    "Vermelho": "F",
+    "Verde": "R",
+    "Azul": "L",
+    "Amarelo": "U",
+    "Laranja": "B",
+    "Branco": "D"
+}
+
+ordem_faces = ['U', 'R', 'F', 'D', 'L', 'B']
+cubo = ""
+
+def make_cube():
+    cubo = ""
+    for face in ordem_faces:
+        for linha in matriz_to_kociemba[face]:
+            cubo += ''.join(linha)
+    return cubo
+
+def transpoe_matriz(matriz):
+    for cor, valores in matriz.items():
+        lado = cor_to_lado[cor]
+        matriz_to_kociemba[lado].extend(
+            [[cor_to_lado[valor] for valor in sublista] for sublista in valores[0]]
+        )
 
 # Contador e armazenamento das verificações para estabilidade
 ultima_matriz_verificada = None
@@ -137,13 +173,18 @@ while True:
 
         # Se a matriz for constante por 3 verificações, salvar na matriz de centro correspondente
         if contador_estabilidade >= 3:
-            if cor_centro_atual in matriz_centro:
+            matriz_to_save = matriz_centro[cor_centro_atual]
+            if(len(matriz_to_save) > 0):
+                print(f'Matriz da cor {cor_centro_atual} já foi salva anteriormente')
+                print('Posicione o cubo em um centro ainda não salvo')
+                print(matriz_centro)
+                False
+            if cor_centro_atual in matriz_centro and len(matriz_to_save) == 0:
                 matriz_centro[cor_centro_atual].append(nova_matriz_cores)
                 print(f"Matriz salva na cor de centro {cor_centro_atual}.")
-                
-                # Exibir mensagem na tela
-                cv2.putText(frame_com_grid, f"Matriz {cor_centro_atual} salva", 
-                            (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
+                print(matriz_centro)
+                print('Posicione o cubo em um centro ainda não salvo')
+                time.sleep(3)
 
             # Resetar contador após salvar
             contador_estabilidade = 0
@@ -158,6 +199,15 @@ while True:
                 cv2.putText(frame_com_grid, cor_nome, (x_start + 10, y_start + 30), 
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1, cv2.LINE_AA)
 
+    if(all(len(lista) > 0 for lista in matriz_centro.values())):
+        transpoe_matriz(matriz_centro)
+        print(matriz_to_kociemba)
+        cubo = make_cube()
+        print(cubo)
+        solve = kociemba.solve(cubo)
+        print(solve)
+        break
+    
     # Exibir o frame com o grid de quadrados e nomes das cores
     cv2.imshow('Webcam - Reconhecimento de Cores', frame_com_grid)
 
