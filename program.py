@@ -24,6 +24,8 @@ matriz_centro = {
     "Branco": []
 }
 
+array_ordem = []
+
 matriz_to_kociemba = {
     "F":[],
     "R":[],
@@ -34,12 +36,12 @@ matriz_to_kociemba = {
 }
 
 cor_to_lado = {
-    "Vermelho": "F",
-    "Verde": "R",
-    "Azul": "L",
-    "Amarelo": "U",
-    "Laranja": "B",
-    "Branco": "D"
+    "0": "F",
+    "1": "R",
+    "2": "B",
+    "3": "L",
+    "4": "U",
+    "5": "D"
 }
 
 ordem_faces = ['U', 'R', 'F', 'D', 'L', 'B']
@@ -54,9 +56,10 @@ def make_cube():
 
 def transpoe_matriz(matriz):
     for cor, valores in matriz.items():
-        lado = cor_to_lado[cor]
+        novo_cor_to_lado = {array_ordem[i]: valor for i, valor in enumerate(cor_to_lado.values())}
+        lado = novo_cor_to_lado[cor]
         matriz_to_kociemba[lado].extend(
-            [[cor_to_lado[valor] for valor in sublista] for sublista in valores[0]]
+            [[novo_cor_to_lado[valor] for valor in sublista] for sublista in valores[0]]
         )
 
 # Contador e armazenamento das verificações para estabilidade
@@ -180,6 +183,7 @@ while True:
                 print(matriz_centro)
                 False
             if cor_centro_atual in matriz_centro and len(matriz_to_save) == 0:
+                array_ordem.append(cor_centro_atual)
                 matriz_centro[cor_centro_atual].append(nova_matriz_cores)
                 print(f"Matriz salva na cor de centro {cor_centro_atual}.")
                 print(matriz_centro)
