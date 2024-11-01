@@ -9,7 +9,7 @@ color_dict = {
     "Vermelho": (255, 0, 0),
     "Verde": (0, 255, 0),
     "Azul": (0, 0, 255),
-    "Amarelo": (255, 255, 0),
+    "Amarelo": (255, 160, 0),
     "Laranja": (255, 130, 0),
     "Branco": (255, 255, 255)
 }
@@ -42,6 +42,27 @@ cor_to_lado = {
     "3": "L",
     "4": "U",
     "5": "D"
+}
+
+dicionario_movimentos = {
+    "F": "https://drive.google.com/uc?export=view&id=1pbD0h4udxy1wTXJdtSYvVaDbHoAqw1AO" ,
+    "F'": "https://drive.google.com/uc?export=view&id=1-SZLp6Xd92qhGmTSWVoAxp9wPOLaCnsr",
+    "F2": "https://drive.google.com/uc?export=view&id=1MsMbjabTn9CFlHG5-Fn5wL7UcwSjFKod" ,
+    "R": "https://drive.google.com/uc?export=view&id=1I88DM9hYAZObSCJKmpFJ1DhfNh4xOsn8" ,
+    "R'": "phttps://drive.google.com/uc?export=view&id=1_cHWnH8Ls-bQFxyuvLvokdFT3R0Mo9HG",
+    "R2": "https://drive.google.com/uc?export=view&id=1-UHIVCsZe5PqEmIteADQ6nJ3J5WTGGMK",
+    "L": "https://drive.google.com/uc?export=view&id=1f9OnkiFCbkAAlhL04gvqaimaljdvez4j" ,
+    "L'": "https://drive.google.com/uc?export=view&id=1m_daj_W68efb-KHtar5D9LYoh9-aAvag",
+    "L2": "https://drive.google.com/uc?export=view&id=1NBhd5K1krm6Kx5ezZcZuaHBcqQbEgkd6",
+    "U": "https://drive.google.com/uc?export=view&id=1SBbxiMf9-v8J-aOnWQsOgKBC94ORVDcL",
+    "U'": "https://drive.google.com/uc?export=view&id=1S0xVIj9PBXfh4ECKW00i1zGhTCkDhb9q",
+    "U2": "https://drive.google.com/uc?export=view&id=1DnXhEnp70DBpzJEqoRbVb9WBUuddL8y2",
+    "D": "https://drive.google.com/uc?export=view&id=1NHA2NzliZFwbDYprRVYSQoExmZ21ND4Q",
+    "D'": "https://drive.google.com/uc?export=view&id=10ghFXb8iZZ5ZcLmKBz6IdlbSOE1drDJS",
+    "D2": "https://drive.google.com/uc?export=view&id=1Lezeah69jwtFLVxJXIVAMBXQZ6ElTuJJ",
+    "B": "https://drive.google.com/uc?export=view&id=1hp6hndTxJZrDWlWx4HkmJtV4ws13UybM",
+    "B'": "https://drive.google.com/uc?export=view&id=1vkQkWpZjGOyvRQverJnDYN6GwgcFC0vl",
+    "B2": "https://drive.google.com/uc?export=view&id=144r8QvPe5mp00LaTOx4oYVMajf5YQ8ha"
 }
 
 ordem_faces = ['U', 'R', 'F', 'D', 'L', 'B']
@@ -204,13 +225,34 @@ while True:
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1, cv2.LINE_AA)
 
     if(all(len(lista) > 0 for lista in matriz_centro.values())):
+
         transpoe_matriz(matriz_centro)
         print(matriz_to_kociemba)
         cubo = make_cube()
-        print(cubo)
+        #print(cubo)
         solve = kociemba.solve(cubo)
-        print(solve)
+        movimentos = solve.split()
+
+        pagina_html = "<!DOCTYPE html>\n<html>\n<head>\n<title>Resolução do Cubo Mágico</title>\n</head>\n<body>\n"
+        pagina_html += "<h1>Instruções para Resolver o Cubo Mágico</h1>\n"
+
+        for mov in movimentos:
+            if mov in dicionario_movimentos:
+                pagina_html += f'<div style="margin-bottom: 20px;">\n'
+                pagina_html += f'<h3>{mov}</h3>\n'
+                pagina_html += f'<img src="{dicionario_movimentos[mov]}" alt="{mov}" style="width: 200px; height: 200px;">\n'
+                pagina_html += '</div>\n'
+
+        pagina_html += "</body>\n</html>"
+
+        with open("resolucao_cubo.html", "w") as file:
+            file.write(pagina_html)
+
+        print("Página HTML gerada com sucesso: resolucao_cubo.html") 
+
         break
+
+
     
     # Exibir o frame com o grid de quadrados e nomes das cores
     cv2.imshow('Webcam - Reconhecimento de Cores', frame_com_grid)
