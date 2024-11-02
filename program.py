@@ -230,28 +230,32 @@ while True:
         transpoe_matriz(matriz_centro)
         print(matriz_to_kociemba)
         cubo = make_cube()
-        #print(cubo)
-        solve = kociemba.solve(cubo)
-        movimentos = solve.split()
 
-        pagina_html = "<!DOCTYPE html>\n<html>\n<head>\n<title>Resolução do Cubo Mágico</title>\n</head>\n<body>\n"
-        pagina_html += "<h1>Instruções para Resolver o Cubo Mágico</h1>\n"
+        try:
+            solve = kociemba.solve(cubo)
+            movimentos = solve.split()
 
-        for mov in movimentos:
-            if mov in dicionario_movimentos:
-                pagina_html += f'<div style="margin-bottom: 20px;">\n'
-                pagina_html += f'<h3>{mov}</h3>\n'
-                pagina_html += f'<img src="{dicionario_movimentos[mov]}" alt="{mov}" style="width: 200px; height: 200px;">\n'
-                pagina_html += '</div>\n'
+            pagina_html = "<!DOCTYPE html>\n<html>\n<head>\n<title>Resolução do Cubo Mágico</title>\n</head>\n<body>\n"
+            pagina_html += "<h1>Instruções para Resolver o Cubo Mágico</h1>\n"
 
-        pagina_html += "</body>\n</html>"
+            for mov in movimentos:
+                if mov in dicionario_movimentos:
+                    pagina_html += f'<div style="margin-bottom: 20px;">\n'
+                    pagina_html += f'<h3>{mov}</h3>\n'
+                    pagina_html += f'<img src="{dicionario_movimentos[mov]}" alt="{mov}" style="width: 200px; height: 200px;">\n'
+                    pagina_html += '</div>\n'
 
-        with open("resolucao_cubo.html", "w") as file:
-            file.write(pagina_html)
+            pagina_html += "</body>\n</html>"
 
-        print("Página HTML gerada com sucesso: resolucao_cubo.html") 
+            with open("resolucao_cubo.html", "w") as file:
+                file.write(pagina_html)
+
+            print("Página HTML gerada com sucesso: resolucao_cubo.html") 
+            
+        except Exception as erro:
+            print("Erro para resolver o cubo! Verifique se a leitura está correta!")
+
         break
-
 
     # Exibir o frame com o grid de quadrados e nomes das cores
     cv2.imshow('Webcam - Reconhecimento de Cores', frame_com_grid)
