@@ -3,7 +3,6 @@ import numpy as np
 import time
 from sklearn.neighbors import KDTree
 import kociemba
-import webbrowser
 
 # Dicionário de cores do cubo mágico em RGB
 color_dict = {
@@ -251,12 +250,9 @@ while True:
             file.write(pagina_html)
 
         print("Página HTML gerada com sucesso: resolucao_cubo.html") 
-        webbrowser.open("file://home/kaua/Área de trabalho/WS-VsCode/trabalhoOpenCV/resolucao_cubo.html")
-
         break
 
 
-    
     # Exibir o frame com o grid de quadrados e nomes das cores
     cv2.imshow('Webcam - Reconhecimento de Cores', frame_com_grid)
 
