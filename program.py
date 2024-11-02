@@ -3,6 +3,7 @@ import numpy as np
 import time
 from sklearn.neighbors import KDTree
 import kociemba
+import webbrowser
 
 # Dicionário de cores do cubo mágico em RGB
 color_dict = {
@@ -45,25 +46,26 @@ cor_to_lado = {
 }
 
 dicionario_movimentos = {
-    "F": "https://drive.google.com/uc?export=view&id=1pbD0h4udxy1wTXJdtSYvVaDbHoAqw1AO" ,
-    "F'": "https://drive.google.com/uc?export=view&id=1-SZLp6Xd92qhGmTSWVoAxp9wPOLaCnsr",
-    "F2": "https://drive.google.com/uc?export=view&id=1MsMbjabTn9CFlHG5-Fn5wL7UcwSjFKod" ,
-    "R": "https://drive.google.com/uc?export=view&id=1I88DM9hYAZObSCJKmpFJ1DhfNh4xOsn8" ,
-    "R'": "phttps://drive.google.com/uc?export=view&id=1_cHWnH8Ls-bQFxyuvLvokdFT3R0Mo9HG",
-    "R2": "https://drive.google.com/uc?export=view&id=1-UHIVCsZe5PqEmIteADQ6nJ3J5WTGGMK",
-    "L": "https://drive.google.com/uc?export=view&id=1f9OnkiFCbkAAlhL04gvqaimaljdvez4j" ,
-    "L'": "https://drive.google.com/uc?export=view&id=1m_daj_W68efb-KHtar5D9LYoh9-aAvag",
-    "L2": "https://drive.google.com/uc?export=view&id=1NBhd5K1krm6Kx5ezZcZuaHBcqQbEgkd6",
-    "U": "https://drive.google.com/uc?export=view&id=1SBbxiMf9-v8J-aOnWQsOgKBC94ORVDcL",
-    "U'": "https://drive.google.com/uc?export=view&id=1S0xVIj9PBXfh4ECKW00i1zGhTCkDhb9q",
-    "U2": "https://drive.google.com/uc?export=view&id=1DnXhEnp70DBpzJEqoRbVb9WBUuddL8y2",
-    "D": "https://drive.google.com/uc?export=view&id=1NHA2NzliZFwbDYprRVYSQoExmZ21ND4Q",
-    "D'": "https://drive.google.com/uc?export=view&id=10ghFXb8iZZ5ZcLmKBz6IdlbSOE1drDJS",
-    "D2": "https://drive.google.com/uc?export=view&id=1Lezeah69jwtFLVxJXIVAMBXQZ6ElTuJJ",
-    "B": "https://drive.google.com/uc?export=view&id=1hp6hndTxJZrDWlWx4HkmJtV4ws13UybM",
-    "B'": "https://drive.google.com/uc?export=view&id=1vkQkWpZjGOyvRQverJnDYN6GwgcFC0vl",
-    "B2": "https://drive.google.com/uc?export=view&id=144r8QvPe5mp00LaTOx4oYVMajf5YQ8ha"
+    "F": "db_imagens/F.png",
+    "F'": "db_imagens/FLinha.png",
+    "F2": "db_imagens/F2.png",
+    "R": "db_imagens/R.png",
+    "R'": "db_imagens/RLinha.png",
+    "R2": "db_imagens/R2.png",
+    "L": "db_imagens/L.png",
+    "L'": "db_imagens/LLinha.png",
+    "L2": "db_imagens/L2.png",
+    "U": "db_imagens/U.png",
+    "U'": "db_imagens/ULinha.png",
+    "U2": "db_imagens/U2.png",
+    "D": "db_imagens/D.png",
+    "D'": "db_imagens/DLinha.png",
+    "D2": "db_imagens/D2.png",
+    "B": "db_imagens/B.png",
+    "B'": "db_imagens/BLinha.png",
+    "B2": "db_imagens/B2.png"
 }
+
 
 ordem_faces = ['U', 'R', 'F', 'D', 'L', 'B']
 cubo = ""
@@ -249,6 +251,7 @@ while True:
             file.write(pagina_html)
 
         print("Página HTML gerada com sucesso: resolucao_cubo.html") 
+        webbrowser.open("file://home/kaua/Área de trabalho/WS-VsCode/trabalhoOpenCV/resolucao_cubo.html")
 
         break
 
