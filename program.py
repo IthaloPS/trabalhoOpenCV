@@ -3,13 +3,14 @@ import numpy as np
 import time
 from sklearn.neighbors import KDTree
 import kociemba
+import webbrowser
 
 # Dicionário de cores do cubo mágico em RGB
 color_dict = {
     "Vermelho": (255, 0, 0),
     "Verde": (0, 255, 0),
     "Azul": (0, 0, 255),
-    "Amarelo": (255, 255, 0),
+    "Amarelo": (255, 160, 0),
     "Laranja": (255, 130, 0),
     "Branco": (255, 255, 255)
 }
@@ -43,6 +44,28 @@ cor_to_lado = {
     "4": "U",
     "5": "D"
 }
+
+dicionario_movimentos = {
+    "F": "db_imagens/F.png",
+    "F'": "db_imagens/FLinha.png",
+    "F2": "db_imagens/F2.png",
+    "R": "db_imagens/R.png",
+    "R'": "db_imagens/RLinha.png",
+    "R2": "db_imagens/R2.png",
+    "L": "db_imagens/L.png",
+    "L'": "db_imagens/LLinha.png",
+    "L2": "db_imagens/L2.png",
+    "U": "db_imagens/U.png",
+    "U'": "db_imagens/ULinha.png",
+    "U2": "db_imagens/U2.png",
+    "D": "db_imagens/D.png",
+    "D'": "db_imagens/DLinha.png",
+    "D2": "db_imagens/D2.png",
+    "B": "db_imagens/B.png",
+    "B'": "db_imagens/BLinha.png",
+    "B2": "db_imagens/B2.png"
+}
+
 
 ordem_faces = ['U', 'R', 'F', 'D', 'L', 'B']
 cubo = ""
@@ -204,13 +227,35 @@ while True:
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1, cv2.LINE_AA)
 
     if(all(len(lista) > 0 for lista in matriz_centro.values())):
+
         transpoe_matriz(matriz_centro)
         print(matriz_to_kociemba)
         cubo = make_cube()
-        print(cubo)
+        #print(cubo)
         solve = kociemba.solve(cubo)
-        print(solve)
+        movimentos = solve.split()
+
+        pagina_html = "<!DOCTYPE html>\n<html>\n<head>\n<title>Resolução do Cubo Mágico</title>\n</head>\n<body>\n"
+        pagina_html += "<h1>Instruções para Resolver o Cubo Mágico</h1>\n"
+
+        for mov in movimentos:
+            if mov in dicionario_movimentos:
+                pagina_html += f'<div style="margin-bottom: 20px;">\n'
+                pagina_html += f'<h3>{mov}</h3>\n'
+                pagina_html += f'<img src="{dicionario_movimentos[mov]}" alt="{mov}" style="width: 200px; height: 200px;">\n'
+                pagina_html += '</div>\n'
+
+        pagina_html += "</body>\n</html>"
+
+        with open("resolucao_cubo.html", "w") as file:
+            file.write(pagina_html)
+
+        print("Página HTML gerada com sucesso: resolucao_cubo.html") 
+        webbrowser.open("file://home/kaua/Área de trabalho/WS-VsCode/trabalhoOpenCV/resolucao_cubo.html")
+
         break
+
+
     
     # Exibir o frame com o grid de quadrados e nomes das cores
     cv2.imshow('Webcam - Reconhecimento de Cores', frame_com_grid)
