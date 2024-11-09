@@ -3,6 +3,7 @@ import numpy as np
 import time
 from sklearn.neighbors import KDTree
 import kociemba
+import webbrowser
 
 # Dicionário de cores do cubo mágico em RGB
 color_dict = {
@@ -234,23 +235,27 @@ while True:
         try:
             solve = kociemba.solve(cubo)
             movimentos = solve.split()
-
-            pagina_html = "<!DOCTYPE html>\n<html>\n<head>\n<title>Resolução do Cubo Mágico</title>\n</head>\n<body>\n"
+            count = 0
+            pagina_html = "<!DOCTYPE html>\n<html>\n<head>\n<meta charset='UTF-8'>\n<title>Resolução do Cubo Mágico</title>\n</head>\n<body>\n"
             pagina_html += "<h1>Instruções para Resolver o Cubo Mágico</h1>\n"
+            pagina_html += "<div style = 'display:flex; flex-flow: row wrap;\n'>"
 
             for mov in movimentos:
+                count += 1
                 if mov in dicionario_movimentos:
                     pagina_html += f'<div style="margin-bottom: 20px;">\n'
-                    pagina_html += f'<h3>{mov}</h3>\n'
+                    pagina_html += f'<h3>Passo: {count}:  {mov}</h3>\n'
                     pagina_html += f'<img src="{dicionario_movimentos[mov]}" alt="{mov}" style="width: 200px; height: 200px;">\n'
                     pagina_html += '</div>\n'
 
+            pagina_html += "</div>"
             pagina_html += "</body>\n</html>"
 
             with open("resolucao_cubo.html", "w") as file:
                 file.write(pagina_html)
 
-            print("Página HTML gerada com sucesso: resolucao_cubo.html") 
+            print("Página HTML gerada com sucesso: resolucao_cubo.html")
+            webbrowser.open("resolucao_cubo.html") 
             
         except Exception as erro:
             print("Erro para resolver o cubo! Verifique se a leitura está correta!")
