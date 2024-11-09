@@ -236,8 +236,16 @@ while True:
             solve = kociemba.solve(cubo)
             movimentos = solve.split()
             count = 0
-            pagina_html = "<!DOCTYPE html>\n<html>\n<head>\n<meta charset='UTF-8'>\n<title>Resolução do Cubo Mágico</title>\n</head>\n<body>\n"
-            pagina_html += "<h1>Instruções para Resolver o Cubo Mágico</h1>\n"
+            pagina_html = """<!DOCTYPE html>
+            <html lang='pt-BR'>
+            <head>
+            <meta charset='UTF-8'>
+            <title>Resolução do Cubo Mágico</title>
+            </head>
+            <body>
+            <h1>Instruções para Resolver o Cubo Mágico</h1>
+            </body>
+            </html>"""
             pagina_html += "<div style = 'display:flex; flex-flow: row wrap;\n'>"
 
             for mov in movimentos:
@@ -251,7 +259,7 @@ while True:
             pagina_html += "</div>"
             pagina_html += "</body>\n</html>"
 
-            with open("resolucao_cubo.html", "w") as file:
+            with open("resolucao_cubo.html", "w", encoding="utf-8") as file:
                 file.write(pagina_html)
 
             print("Página HTML gerada com sucesso: resolucao_cubo.html")
